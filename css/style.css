@@ -26,7 +26,10 @@ body {
   color: var(--text);
   line-height: 1.8;
   font-size: 16px;
+  overflow-x: hidden;
 }
+
+img { max-width: 100%; height: auto; }
 
 a { color: var(--primary); text-decoration: none; transition: color 0.2s; }
 a:hover { color: var(--primary-dark); }
