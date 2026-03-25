@@ -4,6 +4,7 @@
 import os
 import json
 from datetime import datetime
+from urllib.parse import quote
 
 SITE_DIR = os.path.dirname(os.path.abspath(__file__))
 SYMPTOMS_DIR = os.path.join(SITE_DIR, "symptoms")
@@ -1395,7 +1396,7 @@ def adsense_html(slot="auto"):
 def affiliate_html(symptom):
     links = []
     for kw in symptom.get("affiliate_keywords", []):
-        url = f"https://www.amazon.co.jp/s?k={kw.replace(' ', '+')}&tag={AFFILIATE_TAG}"
+        url = f"https://www.amazon.co.jp/s?k={quote(kw)}&tag={AFFILIATE_TAG}"
         links.append(f'<a href="{url}" class="aff-link" target="_blank" rel="noopener noreferrer nofollow">{kw}</a>')
     return f'''<div class="affiliate-box">
   <h3>「{symptom["name"]}」におすすめのアイテム</h3>
