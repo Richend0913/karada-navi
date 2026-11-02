@@ -8,7 +8,7 @@ from urllib.parse import quote
 
 SITE_DIR = os.path.dirname(os.path.abspath(__file__))
 SYMPTOMS_DIR = os.path.join(SITE_DIR, "symptoms")
-ADSENSE_ID = "ca-pub-6327505164684489"
+ADSENSE_ID = ""  # AdSense removed: not approved (2026-11-02)
 AFFILIATE_TAG = "okuritegift-22"
 SITE_NAME = "からだナビ"
 SITE_URL = "https://richend0913.github.io/karada-navi"
@@ -1383,15 +1383,7 @@ def footer_html():
 </footer>'''
 
 def adsense_html(slot="auto"):
-    return f'''<div class="ad-unit">
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="{ADSENSE_ID}"
-       data-ad-slot="{slot}"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>
-</div>'''
+    return f''''''
 
 def affiliate_html(symptom):
     links = []
@@ -1449,7 +1441,6 @@ def generate_index():
   <meta property="og:url" content="{SITE_URL}/">
   <link rel="canonical" href="{SITE_URL}/">
   <link rel="stylesheet" href="css/style.css">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ADSENSE_ID}" crossorigin="anonymous"></script>
   <script type="application/ld+json">
   {{
     "@context": "https://schema.org",
@@ -1595,7 +1586,6 @@ def generate_symptom_page(symptom):
   <meta property="og:url" content="{SITE_URL}/symptoms/{s["slug"]}.html">
   <link rel="canonical" href="{SITE_URL}/symptoms/{s["slug"]}.html">
   <link rel="stylesheet" href="../css/style.css">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ADSENSE_ID}" crossorigin="anonymous"></script>
   <script type="application/ld+json">{article_json}</script>
   <script type="application/ld+json">{faq_json}</script>
   <script type="application/ld+json">{medical_json}</script>
