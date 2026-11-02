@@ -9,6 +9,7 @@ from urllib.parse import quote
 SITE_DIR = os.path.dirname(os.path.abspath(__file__))
 SYMPTOMS_DIR = os.path.join(SITE_DIR, "symptoms")
 ADSENSE_ID = ""  # AdSense removed: not approved (2026-11-02)
+GA_TAG = '<script async src="https://www.googletagmanager.com/gtag/js?id=G-63VB4HT3T2"></script>\n<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag(\'js\',new Date());gtag(\'config\',\'G-63VB4HT3T2\',{page_area:\'karada-navi\'});</script>'
 AFFILIATE_TAG = "okuritegift-22"
 SITE_NAME = "からだナビ"
 SITE_URL = "https://richend0913.github.io/karada-navi"
@@ -1396,6 +1397,30 @@ def affiliate_html(symptom):
   {"".join(links)}
 </div>'''
 
+SUPPLY_KEYWORDS = {
+    "head": ["冷却シート", "アイマスク", "耳栓"],
+    "neck": ["湿布", "ネックピロー", "ホットパック"],
+    "chest": ["マスク", "加湿器", "湯たんぽ"],
+    "stomach": ["腹巻き", "湯たんぽ", "ハーブティー"],
+    "limbs": ["ハンドクリーム", "着圧ソックス", "フットバス"],
+    "skin": ["ハンドクリーム", "リップクリーム", "保湿クリーム"],
+    "mental": ["入浴剤", "アロマディフューザー", "アイマスク"],
+    "whole": ["入浴剤", "マスク", "体温計"],
+}
+DEFAULT_SUPPLY_KEYWORDS = ["湿布・冷却シート", "ハンドクリーム", "リップクリーム", "入浴剤", "マスク"]
+
+def supplies_card_html(symptom):
+    kws = SUPPLY_KEYWORDS.get(symptom.get("category"), DEFAULT_SUPPLY_KEYWORDS)
+    items = []
+    for kw in kws:
+        url = f"https://www.amazon.co.jp/s?k={quote(kw)}&tag={AFFILIATE_TAG}"
+        items.append(f'<a href="{url}" class="aff-link" target="_blank" rel="nofollow sponsored noopener">{kw}｜Amazonで見る</a>')
+    return f'''<div class="affiliate-box supplies-card">
+  <span class="pr-label" style="display:inline-block;font-size:0.75rem;color:#666;border:1px solid #ccc;border-radius:3px;padding:0 6px;margin-bottom:6px;">広告・PR</span>
+  <h3>日用品・セルフケア用品</h3>
+  {"".join(items)}
+</div>'''
+
 # ============================================================
 # GENERATE INDEX
 # ============================================================
@@ -1430,6 +1455,7 @@ def generate_index():
     html = f'''<!DOCTYPE html>
 <html lang="ja">
 <head>
+{GA_TAG}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{SITE_NAME} | 症状別の原因・治し方・対処法ガイド</title>
@@ -1575,6 +1601,7 @@ def generate_symptom_page(symptom):
     html = f'''<!DOCTYPE html>
 <html lang="ja">
 <head>
+{GA_TAG}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{s["name"]}の原因・治し方・対処法｜{SITE_NAME}</title>
@@ -1665,6 +1692,7 @@ def generate_symptom_page(symptom):
       </section>
 
       {adsense_html()}
+      {supplies_card_html(s)}
 
     </article>
   </div>
